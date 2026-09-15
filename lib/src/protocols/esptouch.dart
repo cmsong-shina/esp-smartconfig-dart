@@ -60,7 +60,10 @@ class EspTouch extends Protocol {
     var bssidInsertIndex = _extraHeadLen * _dataCodeLen;
 
     for (final byte in request.bssid) {
-      dataCodes.insertAll(bssidInsertIndex, _dataCode(u8(byte), bssidIndex++));
+      // Short SSIDs without a password can exhaust the data before the BSSID.
+      // Append the remaining BSSID codes, as in Espressif's DatumCode.
+      final insertIndex = bssidInsertIndex.clamp(0, dataCodes.length);
+      dataCodes.insertAll(insertIndex, _dataCode(u8(byte), bssidIndex++));
       bssidInsertIndex += 4 * _dataCodeLen;
     }
 

@@ -1,4 +1,4 @@
-## 3.1.0
+## 3.0.1
 
 - Fixed EspTouch packet generation for open Wi-Fi networks and other requests
   whose combined SSID and password length is less than 11 bytes.
